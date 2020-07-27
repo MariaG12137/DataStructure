@@ -127,3 +127,103 @@ console.log(linkedList.size()); //3
 console.log(linkedList.getHead()); //node{...}
 console.log(linkedList.removeAt(1)); //5
 console.log(linkedList.toString()); //4n4
+
+//Create a new double linked list with methods:append, insert, removeAt, remove, indexOf, isEmpty, size, toStirng, print
+function DoublyLinkedList(){
+  let Node = function(element){
+    this.element = element;
+    this.prev = null;
+    this.next = null;
+  }
+
+  let length = 0;
+  let head = null;
+  let tail = null;
+
+  this.insert = function(position,element){
+    if(position>-1 && position<=length){
+      let previous = null;
+      let current = head;
+      let index = 0;
+      let node = new Node(element);
+
+
+      if(position == 0){
+        if(!head){
+          head = node;
+          tail = node;
+        }else{
+          head = node;
+          node.next = current;
+          current.prev = node;
+        }
+      }else if(position == length){
+        current = tail;
+        current.next = node;
+        node.prev = current;
+        tail = node;
+
+      }else{
+        while(index++ < position){
+          previous = current;
+          current = current.next;
+        };
+        previous.next = node;
+        node.next = current;
+        node.prev = previous;
+        current.prev = node;
+      }
+      length++;
+      return true;
+    }else{
+    return false;
+    }
+  };
+
+  this.removeAt = function(position){
+    if(position > -1 && position <length){
+      let previous = null;
+      let current = head;
+      let index = 0;
+
+      if(position === 0){
+        head = current.next;
+        if(length === 1){
+          tail = null;
+        }else{
+          head.prev = null;
+        }
+      }else if(position === length-1){
+        current = tail;
+        tail = current.prev;
+        tail.next = null;
+      }else{
+        while(index++<position){
+          previous = current;
+          current = current.next;
+        };
+        previous.next = current.next;
+        current.next.prev = previous;
+      }
+      length--;
+      return current.element;
+    }else{
+      return null;
+    }
+  };
+
+  this.toString = function(){
+    let current = head;
+    let string = '';
+    while(current){
+      string += current.element + (current.next ? 'n': '');
+      current = current.next;
+    }
+    return console.log(string);
+  };
+}
+let doublyLinkedList = new DoublyLinkedList();
+console.log(doublyLinkedList.insert(0,7)); //true
+console.log(doublyLinkedList.insert(1,3)); //true
+console.log(doublyLinkedList.removeAt(1)); //3
+doublyLinkedList.toString(); //7
