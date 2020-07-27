@@ -1,0 +1,129 @@
+//Create a new linked list with methods:append, insert, removeAt, remove, indexOf, isEmpty, size, toStirng, print
+
+function LinkedList(){
+  let Node = function(element){
+    this.element = element;
+    this.next = null;
+  }
+
+  let length = 0;
+  let head = null;
+
+  this.append = function(element){
+    let node = new Node(element);
+    let current = null;
+
+    if(head === null){
+      head = node;
+    }else{
+      current = head;
+      while(current.next){
+        current = current.next;
+      }
+      current.next = node;
+    }
+    length++;
+  };
+
+  this.removeAt = function(position){
+    if(position >-1 && position < length){
+      let previous = null;
+      let current = head;
+      let index = 0;
+
+      if(position === 0){
+        head = current.next;
+      }else{
+        while(index++ < position){
+          previous = current;
+          current = current.next;
+        }
+        previous.next = current.next;
+      }
+      length--;
+      return current.element;
+    }else{
+      return null;
+    }
+  };
+
+  this.insert = function(position, element){
+    if(position > -1 && position <= length){
+      let previous = null;
+      let current = head;
+      let index = 0;
+      let node = new Node(element);
+
+      if(position === 0){
+        head = node;
+        node.next = current;
+      }else{
+        while (index++ < position){
+          previous = current;
+          current = current.next;
+        }
+        previous.next = node;
+        node.next = current;
+      }
+      length++;
+      return true;
+    } else{
+    return false;
+  }
+};
+this.toString = function(){
+  let current = head;
+  let string = '';
+
+  while(current){
+    string += current.element + (current.next ? 'n':'');
+    current = current.next;
+  }
+  return string;
+};
+
+this.indexOf = function(element){
+
+  let current = head;
+  let index = 0;
+
+  while(current){
+    if(current.element != element){
+      current = current.next;
+      index++;
+    }else{
+      return index;
+    }
+  }
+  return -1;
+};
+
+this.remove = function(element){
+  let index = this.indexOf(element);
+  return this.removeAt(index);
+};
+
+this.isEmpty = function(){
+  return (length == 0);
+};
+
+this.size = function(){
+  return length;
+};
+
+this.getHead = function(){
+  return head;
+};
+}
+
+let linkedList = new LinkedList();
+linkedList.append(4);
+linkedList.append(4);
+linkedList.insert(1,5);
+console.log(linkedList.toString()); //4n5n4
+console.log(linkedList.indexOf(5)); //1
+console.log(linkedList.isEmpty()); //false
+console.log(linkedList.size()); //3
+console.log(linkedList.getHead()); //node{...}
+console.log(linkedList.removeAt(1)); //5
+console.log(linkedList.toString()); //4n4
