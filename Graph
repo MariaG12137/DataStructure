@@ -27,6 +27,20 @@ function Graph(){
     return s;
   };
 
+  let initializeColor = function(){
+    let color = [];
+    for (let i=0; i<vertices.length; i++){
+      color[vertices[i]] = 'white';
+    }
+    return color;
+  };
+
+  this.bfs = function(v,callback){
+    let color = initializeColor();
+    queue = new Queue();
+    queue.enqueue(v);
+  };
+
 }
 let graph = new Graph();
 let myVertices = ['A','B','C','D','E','F','G','H','I'];
