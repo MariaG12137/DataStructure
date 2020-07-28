@@ -1,0 +1,2 @@
+//Create a dictionary with the following methods: set(key, value), delete(key), has(key), 
+//get(key), clear, size, keys, values
