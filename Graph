@@ -1,1 +1,46 @@
+//Create a graph
 
+function Graph(){
+  let vertices = [];
+  let adjList = new Dictionary();
+
+  this.addVertex = function(v){
+    vertices.push(v);
+    adjList.set(v, []);
+  };
+
+  this.addEdge = function(v, w){
+    adjList.get(v).push(w);
+    adjList.get(w).push(v);
+  }
+
+  this.toString = function(){
+    var s = '';
+    for(let ver of vertices){
+      s += ver + '->';
+      let neighbors = adjList.get(ver);
+      for(let nei of neighbors){
+        s += nei + ' ';
+      }
+      s += '\n';
+    }
+    return s;
+  };
+
+}
+let graph = new Graph();
+let myVertices = ['A','B','C','D','E','F','G','H','I'];
+for(let ver of myVertices){
+  graph.addVertex(ver);
+}
+graph.addEdge('A','B');
+graph.addEdge('A','C');
+graph.addEdge('A','D');
+graph.addEdge('C','D');
+graph.addEdge('C','G');
+graph.addEdge('D','G');
+graph.addEdge('D','H');
+graph.addEdge('B','E');
+graph.addEdge('B','F');
+graph.addEdge('E','I');
+console.log(graph.toString())
