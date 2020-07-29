@@ -34,11 +34,60 @@ function Graph(){
     }
     return color;
   };
-
+  
   this.bfs = function(v,callback){
     let color = initializeColor();
     queue = new Queue();
     queue.enqueue(v);
+
+    while (!queue.isEmpty()){
+      let u = queue.dequeue();
+      neighbors = adjList.get(u);
+      color[u] = 'grey';
+      for(let nei of neighbors){
+        var w = nei;
+        if(color[w] === 'white'){
+          color[w] = 'grey';
+          queue.enqueue(w);
+        }
+      }
+      color[u] = 'black';
+      if(callback){
+        callback(u);
+      }
+    }
+  };
+
+  this.BFS = function(v){
+
+    let color = initializeColor();
+    let queue = new Queue();
+    let d = {};
+    let pred = {};
+    queue.enqueue(v);
+
+    for(let ver of vertices){
+      d[ver] = 0;
+      pred[ver] = null;
+    }
+
+    while(!queue.isEmpty()){
+      let u = queue.dequeue();
+      neighbors = adjList.get(u);
+      color[u] = 'grey';
+
+      for(let nei of neighbors){
+        let w = nei;
+        if(color[w] === 'white'){
+          color[w] = 'grey';
+          d[w] = d[u]+1;
+          pred[w] = u;
+          queue.enqueue(w);
+        }
+      }
+      color[u] = 'black';
+    }
+    return console.log(d,pred);
   };
 
 }
@@ -57,4 +106,12 @@ graph.addEdge('D','H');
 graph.addEdge('B','E');
 graph.addEdge('B','F');
 graph.addEdge('E','I');
-console.log(graph.toString())
+console.log(graph.toString());
+
+function printNode(value){
+  console.log('Visited vertex: ' + value);
+};
+
+graph.bfs(myVertices[0], printNode);
+
+let shortestPathA = graph.BFS(myVertices[0]);
