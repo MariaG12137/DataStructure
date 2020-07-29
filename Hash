@@ -33,6 +33,18 @@ function HashTable(){
     }
   };
 
+  let ValuePair = function(key, value){
+    this.key = key;
+    this.value = value;
+    this.toString = function(){
+      return '[' + this.key + '-' + this.value + ']';
+    }
+  };
+
+  this.put = function(key, value){
+    
+  }
+
 }
 
 let hash = new HashTable();
@@ -42,3 +54,4 @@ hash.put('banana','yellow');
 hash.put('kiwi','green');
 console.log(hash.get('apple'));
 hash.print();
+
