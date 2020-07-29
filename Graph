@@ -1,3 +1,35 @@
+function Stack(){
+  let items = [];
+ 
+  this.push = function(element){
+    items.push(element);
+  }
+ 
+  this.pop = function(){
+    return items.pop();
+  }
+ 
+  this.peek = function(){
+    return items[items.length-1];
+  }
+ 
+  this.isEmpty = function(){
+    return items.length == 0;
+  }
+ 
+  this.clear = function(){
+    items = [];
+  }
+ 
+  this.size = function(){
+    return items.length;
+  }
+  
+  this.print = function(){
+    console.log(items.toString);
+  };
+}
+
 function Queue(){
   let items = [];
  
@@ -167,7 +199,117 @@ function Graph(){
     return console.log(d,pred);
   };
 
+  this.dfs = function(callback){
+    let color = initializeColor();
+
+    for(let ver of vertices){
+      if(color[ver] === 'white'){
+        dfsVisit(ver, color, callback);
+      }
+    }
+  };
+  
+  let dfsVisit = function(u, color, callback){
+    color[u] = 'grey';
+    if(callback){
+      callback(u);
+    }
+    let neighbors = adjList.get(u);
+    for(let nei of neighbors){
+      let w = nei;
+      if(color[w] === 'white'){
+        dfsVisit(w,color, callback);
+      }
+    }
+    color[u] = 'black';
+  };
+
+  let time = 0;
+
+  this.DFS = function(){
+    let color = initializeColor();
+    let d = {};
+    let f = {};
+    let p = {};
+    time = 0;
+
+    for (let ver of vertices){
+      f[ver] = 0;
+      d[ver] = 0;
+      p[ver] = null;
+    }
+
+    for(let ver of vertices){
+      if(color[ver] === 'white'){
+        DFSVisit(ver, color, d, f, p);
+      }
+    }
+    return console.log(d,f,p);
+  };
+
+  let DFSVisit = function(u, color, d, f, p){
+    console.log('discovered: ' + u);
+    color[u] = 'grey';
+    d[u] = ++time;
+    let neighbors = adjList.get(u);
+
+    for(let nei of neighbors){
+      let w = nei;
+      if(color[w] === 'white'){
+        p[w] = u;
+        DFSVisit(w, color, d, f, p)
+      }
+    }
+    color[u] = 'black';
+    f[u] = ++time;
+    console.log('explored: ' + u);
+  }
 }
+
+function GraphArray(graph){
+  
+  this.dijkstra = function(src){
+    let dist = {};
+    let visited = {};
+    let length = graph.length;
+
+    for(let i=0; i<length; i++){
+      dist[i] = INF;
+      visited[i] = false;
+    }
+
+    dist[src] = 0;
+
+    for(let i=0; i<length-1; i++){
+      let u = minDistance(dist, visited);
+      visited[u] = true;
+
+      for(let v=0; v<length; v++){
+        if(!visited[v] &&
+        this.graph[u][v] != 0 &&
+        dist[u] != INF &&
+        dist[u]+this.graph[u][v] < dist[v]){
+          dist[v] = dist[u] + this.graph[u][v];
+        }
+      }
+    }
+    return dist;
+  };
+
+  let minDistance = function(dist, visited){
+    let min = INF;
+    let minIndex = -1;
+
+    for(let v=0; v<dist.length; v++){
+      if(visited[v] == false && dist[v] <=min){
+      min = dist[v];
+      minIndex = v;
+      }
+    }
+    return minIndex;
+  }
+}
+
 let graph = new Graph();
 let myVertices = ['A','B','C','D','E','F','G','H','I'];
 for(let ver of myVertices){
@@ -190,5 +332,19 @@ function printNode(value){
 };
 
 graph.bfs(myVertices[0], printNode);
-
 let shortestPathA = graph.BFS(myVertices[0]);
+graph.dfs(printNode);
+console.log(graph.DFS());
+
+let graph2 = [[0, 2, 4, 0, 0, 0],
+              [0, 0, 1, 4, 2, 0],
+              [0, 0, 0, 0, 3, 0],
+              [0, 0, 0, 0, 0, 2],
+              [0, 0, 0, 3, 0, 2],
+              [0, 0, 0, 0, 0, 0]];
+
+let graphArray = new GraphArray(graph2);
+console.log(graphArray)
+
+
+
