@@ -1,0 +1,11 @@
+//Creating the BinarySearchTree class with the following methods: insert, search, inOrderTraverse, preOrderTraverse, postOrderTraverse, min, max, remove
+
+function BinarySearchTree(){
+  let Node = function(key){
+    this.key = key;
+    this.left = null;
+    this.right = null;
+  };
+
+  let root = null;
+}
