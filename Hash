@@ -151,6 +151,8 @@ function HashTable(){
 
 }
 
+//Create a HashTable class
+
 let hash = new HashTable();
 
 hash.put('apple','red');
@@ -159,7 +161,7 @@ hash.put('kiwi','green');
 console.log(hash.get('apple'));
 hash.print();
 
-//Separate chaining
+//Create a Separate chaining hash table
 function HashTableLL(){
   table = [];
   let loseloseHashCode = function(key){
@@ -230,6 +232,7 @@ console.log(hashTableLL.get('kiwi'));
 hashTableLL.remove('banana');
 console.log(hashTableLL.get('banana'));
 
+//Create a Linear Probing HashTable
 function HashTableLP(){
   let table = [];
 
