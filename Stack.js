@@ -27,9 +27,54 @@ function Stack(){
   }
   
   this.print = function(){
-    console.log(items.toString);
+    console.log(items.toString());
   };
 }
+==========================================================================================================================
+
+//Create a stack with the follwing methods: push, pop(), peek, isEmpty, clear, size
+class Stack{
+  constructor(){
+    this.items = [];
+  }
+  push(element){
+    this.items.push(element);
+  }
+  pop(){
+    if(this.isEmpty()){
+      return false
+    }
+    return this.items.pop();
+  }
+  peek(){
+    return this.items[this.items.length-1];
+  }
+
+  isEmpty(){
+    return !this.items.length;
+  }
+  clear(){
+    this.items = [];
+  }
+  size(){
+    return this.items.length;
+  }
+  print(){
+    console.log(this.items.toString())
+  }
+}
+let stack = new Stack();
+stack.push(3);
+stack.push(4);
+console.log(stack.pop()) //4
+console.log(stack.isEmpty()) //false
+console.log(stack.peek()); //3
+console.log(stack.size()); //1
+stack.clear();
+stack.push(4);
+stack.push(4);
+stack.print();//4,4
+==================================================================================================================
 
 //Convert decimal to binary
 function divideBy2(decNumber){
@@ -47,7 +92,7 @@ function divideBy2(decNumber){
     }
   }
 }
-
+=======================================================================================================================
 //Conversion to any base
 function divideBy2(decNumber){
   let stack = new Stack();
